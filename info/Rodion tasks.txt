@@ -4,7 +4,7 @@ jame pvz 5i testai, kurie:
 1) Ar galima ikelti CV
 2) ar veikia search, kai suvedama lithuania ismetama 9 matches for lithuania
 3) patikrinti ar veikia carrers mygtukas +
-4) Contact us, check box suveikia
+4) Contact us, patikrint ar pasirenkama valstybe +-
 5) Ar major delivery centers yra 14 +
 
 widgital\digital transformation pasidometi
