@@ -7,3 +7,7 @@ ORION_WEB = "https://www.orioninc.com/"
 
 #Cookies
 Cookies = "hs-eu-confirmation-button"
+
+# Header elements
+COMPANY = "menu-27"
+CAREERS = "Careers"
