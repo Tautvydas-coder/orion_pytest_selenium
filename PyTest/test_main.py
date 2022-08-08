@@ -50,17 +50,25 @@ def setup():
 #                                   '/html/body/main/div[2]/div/div/div/div[2]/div/form/div[2]/ul/li[7]/div/div/div[2]/span')
 #     assert country.text == "Algeria"
 
-def test_uploadCV():
-    driver.get('https://www.orioninc.com/careers/job-application/?job_id=13746')
-    time.sleep(2)
-    save_info = driver.find_element(By.XPATH, '//*[@id="label_7_13_1"]')
-    ActionChains(driver).scroll_to_element(save_info).perform()
-    upload = driver.find_element(By.XPATH, '//*[@id="input_7_12"]')
-    upload.send_keys("C:\\Users\\takvietk\\Desktop\\git-cheat-sheet-education.pdf")
-    cv_name = driver.find_element(By.XPATH, '//*[@id="gfield_description_7_12"]')
-    cv_name_text = cv_name.text
-    assert cv_name_text.__contains__("git")
+# def test_uploadCV():
+#     driver.get('https://www.orioninc.com/careers/job-application/?job_id=13746')
+#     time.sleep(2)
+#     save_info = driver.find_element(By.XPATH, '//*[@id="label_7_13_1"]')
+#     ActionChains(driver).scroll_to_element(save_info).perform()
+#     upload = driver.find_element(By.XPATH, '//*[@id="input_7_12"]')
+#     upload.send_keys("C:\\Users\\takvietk\\Desktop\\git-cheat-sheet-education.pdf")
+#     cv_name = driver.find_element(By.XPATH, '//*[@id="gfield_description_7_12"]')
+#     cv_name_text = cv_name.text
+#     assert cv_name_text.__contains__("git")
 
+def test_searchBar():
+    header = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "/html/body/header")))
+    search_button = driver.find_element(By.XPATH, '/html/body/header/div/nav/div[3]')
+    ActionChains(driver).move_to_element(header).click(search_button).perform()
+    driver.find_element(By.XPATH, '//*[@id="search-form-wrapper"]/form/input[1]').send_keys('lithuania')
+    driver.find_element(By.XPATH, '//*[@id="search-form-wrapper"]/form/input[2]').click()
+    text = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div/div/div[2]/div[3]').text
+    assert text.__contains__("matches for " + "lithuania")
 
 # def teardown():
 #     driver.close()
