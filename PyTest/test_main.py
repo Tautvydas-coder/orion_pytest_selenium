@@ -1,6 +1,7 @@
 import time
-
-from selenium.webdriver import ActionChains
+import pyautogui
+import os
+from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
@@ -16,7 +17,9 @@ def setup():
     driver.implicitly_wait(7)
     driver.maximize_window()
     driver.get(ORION_WEB)
-    driver.find_element(By.ID, Cookies).click()
+    time.sleep(1)
+    WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.ID, Cookies))).click()
+    time.sleep(1)
 
 
 # def test_HeadersDropdownButton():
@@ -48,6 +51,15 @@ def setup():
 #     assert country.text == "Algeria"
 
 def test_uploadCV():
+    driver.get('https://www.orioninc.com/careers/job-application/?job_id=13746')
+    time.sleep(2)
+    save_info = driver.find_element(By.XPATH, '//*[@id="label_7_13_1"]')
+    ActionChains(driver).scroll_to_element(save_info).perform()
+    upload = driver.find_element(By.XPATH, '//*[@id="input_7_12"]')
+    upload.send_keys("C:\\Users\\takvietk\\Desktop\\git-cheat-sheet-education.pdf")
+    cv_name = driver.find_element(By.XPATH, '//*[@id="gfield_description_7_12"]')
+    cv_name_text = cv_name.text
+    assert cv_name_text.__contains__("git")
 
 
 # def teardown():
