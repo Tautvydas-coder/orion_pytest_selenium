@@ -1,14 +1,11 @@
 import time
-import pyautogui
-import os
-from selenium.webdriver import ActionChains, Keys
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from resources.variables import *
 from driver_services.service import *
 from selenium.webdriver.support import expected_conditions as EC
-
+import pytest
 # driver = driver_service_mozila()
 driver = driver_service_chrome()
 
@@ -22,53 +19,57 @@ def setup():
     time.sleep(1)
 
 
-# def test_HeadersDropdownButton():
-#     header = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH,"/html/body/header")))
-#     element = driver.find_element(By.ID, COMPANY)
-#     dropdown = driver.find_element(By.LINK_TEXT, CAREERS)
-#     ActionChains(driver).move_to_element(header).move_to_element(element).move_to_element(dropdown).click().perform()
-#     web_title = driver.title
-#     assert web_title == "Careers - Orion Innovation"
+@pytest.mark.headerDropdown
+def test_HeadersDropdownButton():
+    header = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, HEADER)))
+    element = driver.find_element(By.ID, COMPANY)
+    dropdown = driver.find_element(By.LINK_TEXT, CAREERS)
+    ActionChains(driver).move_to_element(header).move_to_element(element).move_to_element(dropdown).click().perform()
+    web_title = driver.title
+    assert web_title == CAREERS_WEB_TITLE
 
 
-# def test_MajorDeliveryCentersValue():
-#     MaturityAndScale = driver.find_element(By.XPATH,'//*[@id="h-maturity-scale"]')
-#     ActionChains(driver).scroll_to_element(MaturityAndScale).perform()
-#     element = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH,'//*[@id="number-block-block_5defc5f643e72"]/div[1]')))
-#     time.sleep(3)
-#     number = element.text
-#     assert number == "14"
+def test_MajorDeliveryCentersValue():
+    Block = driver.find_element(By.XPATH, MATURITY_SCALE)
+    ActionChains(driver).scroll_to_element(Block).perform()
+    element = WebDriverWait(driver, 15).until(
+        EC.presence_of_element_located((By.XPATH, NUM_OF_CENTERS_ELEMENT)))
+    time.sleep(3)
+    number = element.text
+    assert number == NUMBER
 
-# def test_countrySelection():
-#     agree_field = driver.find_element(By.XPATH, '//*[@id="field_1_12"]')
-#     select_element = driver.find_element(By.XPATH, '//*[@id="field_1_9"]/div/div')
-#     ActionChains(driver).scroll_to_element(agree_field).perform()
-#     ActionChains(driver).move_to_element(select_element).click().perform()
-#     selected_country = driver.find_element(By.XPATH, '//*[@id="field_1_9"]/div/div/div[3]/div/ul/li[4]')
-#     ActionChains(driver).move_to_element(selected_country).click().perform()
-#     country = driver.find_element(By.XPATH,
-#                                   '/html/body/main/div[2]/div/div/div/div[2]/div/form/div[2]/ul/li[7]/div/div/div[2]/span')
-#     assert country.text == "Algeria"
 
-# def test_uploadCV():
-#     driver.get('https://www.orioninc.com/careers/job-application/?job_id=13746')
-#     time.sleep(2)
-#     save_info = driver.find_element(By.XPATH, '//*[@id="label_7_13_1"]')
-#     ActionChains(driver).scroll_to_element(save_info).perform()
-#     upload = driver.find_element(By.XPATH, '//*[@id="input_7_12"]')
-#     upload.send_keys("C:\\Users\\takvietk\\Desktop\\git-cheat-sheet-education.pdf")
-#     cv_name = driver.find_element(By.XPATH, '//*[@id="gfield_description_7_12"]')
-#     cv_name_text = cv_name.text
-#     assert cv_name_text.__contains__("git")
+def test_countrySelection():
+    field = driver.find_element(By.XPATH, AGREE_TO_COMMUNICATE)
+    select_element = driver.find_element(By.XPATH, COUNTRIES)
+    ActionChains(driver).scroll_to_element(field).perform()
+    ActionChains(driver).move_to_element(select_element).click().perform()
+    selected_country = driver.find_element(By.XPATH, COUNTRY)
+    ActionChains(driver).move_to_element(selected_country).click().perform()
+    country = driver.find_element(By.XPATH, SELECTED_COUNTRY)
+    assert country.text == TESTING_COUNTRY
+
+
+def test_uploadCV():
+    driver.get(APPLY_FOR_JOB)
+    time.sleep(2)
+    save_info_check = driver.find_element(By.XPATH, SAVE_INFO)
+    ActionChains(driver).scroll_to_element(save_info_check).perform()
+    upload = driver.find_element(By.XPATH, RESUME)
+    upload.send_keys(CV_PATH)
+    cv_name = driver.find_element(By.XPATH, UPLOADED_DESCRIPTION)
+    cv_name_text = cv_name.text
+    assert cv_name_text.__contains__(CV_NAME)
+
 
 def test_searchBar():
-    header = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "/html/body/header")))
-    search_button = driver.find_element(By.XPATH, '/html/body/header/div/nav/div[3]')
+    header = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, HEADER)))
+    search_button = driver.find_element(By.XPATH, HEADER_SEARCH_BUTTON)
     ActionChains(driver).move_to_element(header).click(search_button).perform()
-    driver.find_element(By.XPATH, '//*[@id="search-form-wrapper"]/form/input[1]').send_keys('lithuania')
-    driver.find_element(By.XPATH, '//*[@id="search-form-wrapper"]/form/input[2]').click()
-    text = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div/div/div[2]/div[3]').text
-    assert text.__contains__("matches for " + "lithuania")
+    driver.find_element(By.XPATH, SEARCH_INPUT).send_keys(SEARCING_NAME)
+    driver.find_element(By.XPATH, SEARCH_BUTTON).click()
+    text = driver.find_element(By.XPATH, SEARCH_MATCHES).text
+    assert text.__contains__("matches for " + SEARCING_NAME)
 
 # def teardown():
 #     driver.close()
