@@ -2,7 +2,7 @@ Su pytest isstestuoti orion web, pvz padaryti smoke testus ir kad juos leistu vi
 Pasidaryti setup, jog visada kaip naujas testas veiktu nuo webo atidarymo
 jame pvz 5i testai, kurie:
 1) Ar galima ikelti CV +
-2) ar veikia search, kai suvedama lithuania ismetama 9 matches for lithuania
+2) ar veikia search, kai suvedama lithuania ismetama 9 matches for lithuania +
 3) patikrinti ar veikia carrers mygtukas +
 4) Contact us, patikrint ar pasirenkama valstybe +-
 5) Ar major delivery centers yra 14 +
