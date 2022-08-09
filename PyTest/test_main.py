@@ -84,7 +84,6 @@ def test_searchBar(setup):
     ActionChains(driver).move_to_element(header).click(search_button).perform()
     WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, SEARCH_INPUT))).send_keys(SEARCING_NAME)
     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH, SEARCH_BUTTON))).click()
-    # time.sleep(2)
     matches = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, SEARCH_MATCHES)))
     matches_for = matches.text
     assert matches_for.__contains__("matches for " + SEARCING_NAME)
