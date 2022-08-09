@@ -29,19 +29,20 @@ def setup():
 
 
 @pytest.mark.smoke
-def test_HeadersDropdownButton(setup):
+def test_headersDropdownButton(setup):
     header = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, HEADER)))
-    element = driver.find_element(By.ID, COMPANY)
-    dropdown = driver.find_element(By.LINK_TEXT, CAREERS)
+    element =  WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, COMPANY)))
+    dropdown = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.LINK_TEXT, CAREERS)))
     ActionChains(driver).move_to_element(header).move_to_element(element).perform()
+    driver.implicitly_wait(10)
     ActionChains(driver).move_to_element(dropdown).click(dropdown).perform()
-    time.sleep(2)
+    driver.implicitly_wait(10)
     web_title = driver.title
     assert web_title == CAREERS_WEB_TITLE
 
 
 @pytest.mark.smoke
-def test_MajorDeliveryCentersValue(setup):
+def test_majorDeliveryCentersValue(setup):
     info_block = driver.find_element(By.XPATH, MATURITY_SCALE)
     ActionChains(driver).scroll_to_element(info_block).perform()
     element = WebDriverWait(driver, 15).until(
@@ -83,5 +84,6 @@ def test_searchBar(setup):
     ActionChains(driver).move_to_element(header).click(search_button).perform()
     driver.find_element(By.XPATH, SEARCH_INPUT).send_keys(SEARCING_NAME)
     WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, SEARCH_BUTTON))).click()
+    time.sleep(1)
     text = driver.find_element(By.XPATH, SEARCH_MATCHES).text
     assert text.__contains__("matches for " + SEARCING_NAME)
