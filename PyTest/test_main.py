@@ -18,7 +18,7 @@ def setup():
     driver.implicitly_wait(10)
     driver.maximize_window()
     driver.get(ORION_WEB)
-    time.sleep(1)
+    time.sleep(2)
     cookies_accept = WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.ID, Cookies)))
     cookies_accept.click()
     time.sleep(1)
