@@ -24,7 +24,7 @@ SAVE_INFO = '//*[@id="label_7_13_1"]'
 
 # Elements
 NUM_OF_CENTERS_ELEMENT = '//*[@id="number-block-block_5defc5f643e72"]/div[1]'
-NUMBER = "14"
+CORRECT_NUMBER = "14" #correct number 14
 COUNTRIES = '//*[@id="field_1_9"]/div/div'
 RESUME = '//*[@id="input_7_12"]'
 UPLOADED_DESCRIPTION = '//*[@id="gfield_description_7_12"]'
