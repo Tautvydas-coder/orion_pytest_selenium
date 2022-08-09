@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import pytest
 
 
-# TODO kiekvienas testas suveiktu random atskirai
+# pytest -rA --random-order
 
 @pytest.fixture()
 def setup():
@@ -31,7 +31,7 @@ def setup():
 @pytest.mark.smoke
 def test_headersDropdownButton(setup):
     header = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, HEADER)))
-    element =  WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, COMPANY)))
+    element = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, COMPANY)))
     dropdown = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.LINK_TEXT, CAREERS)))
     ActionChains(driver).move_to_element(header).move_to_element(element).perform()
     driver.implicitly_wait(10)
